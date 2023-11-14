@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
+import { ViewService } from 'src/app/services/view.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 @Component({
@@ -12,8 +13,16 @@ export class HomeComponent {
   cols: number = 3;
   rowHeight: number = 335;
   category: string | undefined;
+  sideNavVisibility: boolean = true;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private viewService: ViewService,
+  ) {
+    this.viewService.isMobile().subscribe((result) => {
+      this.sideNavVisibility = !result;
+    });
+  }
 
   onColumnsUpdated(colsNum: number): void {
     this.cols = colsNum;
@@ -30,5 +39,9 @@ export class HomeComponent {
       quantity: 1,
       id: product.id,
     });
+  }
+
+  toggleSideNavVisibility(): void {
+    this.sideNavVisibility = !this.sideNavVisibility;
   }
 }

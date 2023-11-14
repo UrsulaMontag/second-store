@@ -2,10 +2,16 @@
   [autosize]="true"
   class="min-h-full max-w-screen-xl mx-auto border-x"
 >
-  <mat-drawer mode="side" position="end" opened class="p-6"
+  <mat-drawer
+    mode="side"
+    position="end"
+    [opened]="sideNavVisibility"
+    class="p-6"
     ><filters (showCategory)="onShowCategory($event)"></filters>
   </mat-drawer>
   <mat-drawer-content class="p-6"
+    ><button mat-button (click)="toggleSideNavVisibility()" >
+      <mat-icon>menu</mat-icon></button
     ><products-header
       (columnsCountChange)="onColumnsUpdated($event)"
     ></products-header>
