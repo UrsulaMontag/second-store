@@ -14,7 +14,7 @@ export class ProductsHeaderComponent implements OnInit {
 
   constructor(private viewService: ViewService) {}
   ngOnInit(): void {
-    this.viewService.isMobile().subscribe((result) => {
+    this.viewService.isMobile$().subscribe((result) => {
       this.isMobile = result;
     });
   }

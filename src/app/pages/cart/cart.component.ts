@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.cartService.cart.subscribe((_cart) => {
+    this.cartService.cart$.subscribe((_cart) => {
       this.cart = _cart;
       this.dataSource = this.cart.items;
     });

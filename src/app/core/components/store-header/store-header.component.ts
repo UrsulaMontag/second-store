@@ -1,15 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
+import { ViewService } from 'src/app/services/view.service';
 
 @Component({
   selector: 'store-header',
   templateUrl: './store-header.component.html',
   styleUrls: ['./store-header.component.css'],
 })
-export class StoreHeaderComponent {
+export class StoreHeaderComponent implements OnInit {
   private _cart: Cart = { items: [] };
   itemsQuantity = 0;
+  isMobile: boolean = false;
+  sideNavVisibility: boolean = false;
 
   @Input()
   get cart(): Cart {
@@ -23,7 +26,25 @@ export class StoreHeaderComponent {
       .reduce((prev, current) => prev + current, 0);
   }
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private viewService: ViewService,
+  ) {
+    this.cartService.cart$.subscribe((cart) => (this.cart = cart));
+    this.viewService
+      .isMobile$()
+      .subscribe((isMobile: boolean): boolean => (this.isMobile = isMobile));
+  }
+
+  ngOnInit(): void {
+    this.viewService.sideNavVisibility$.subscribe(
+      (visibility: boolean): boolean => (this.sideNavVisibility = visibility),
+    );
+  }
+
+  toggleSideNavVisibility(): void {
+    this.viewService.toggleSideNavVisibility();
+  }
 
   getTotal(items: Array<CartItem>): number {
     return this.cartService.getTotal(items);

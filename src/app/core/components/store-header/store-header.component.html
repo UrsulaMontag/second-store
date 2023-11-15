@@ -1,10 +1,13 @@
-<mat-toolbar class="max-w-screen-xl mx-auto mb-6 border-x justify-between">
+<mat-toolbar class="max-w-screen-xl bg-blueGreen text-dark bg-opacity-20 mx-auto mb-2 sm:mb-6 border-x justify-around sm:justify-between">
+  <button mat-button *ngIf="isMobile" (click)="toggleSideNavVisibility()">
+    <mat-icon>menu</mat-icon></button>
   <a routerLink="home">ReLove: Your EcoThread Hub</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon
       [matBadge]="itemsQuantity"
       [matBadgeHidden]="!itemsQuantity"
       matBadgeColor="warn"
+      class="text-warn"
       >shopping_cart</mat-icon
     >
   </button>
@@ -30,13 +33,13 @@
       <div class="pt-3 flex justify-between">
         <button
           (click)="onClearCart()"
-          class="bg-rose-600 text-white rounded-full w-9 h-9 pt-1"
+          class="bg-rose-600 text-warn rounded-full w-9 h-9 pt-1"
         >
           <mat-icon>remove_shopping_cart</mat-icon>
         </button>
         <button
           routerLink="cart"
-          class="bg-green-400 text-white rounded-full w-9 h-9 pt-1"
+          class="bg-green-400 text-blueGreen rounded-full w-9 h-9 pt-1"
         >
           <mat-icon>shopping_cart</mat-icon>
         </button>

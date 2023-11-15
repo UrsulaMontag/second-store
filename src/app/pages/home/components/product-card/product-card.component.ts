@@ -7,10 +7,11 @@ import { Product } from 'src/app/models/product.model';
   styleUrls: ['./product-card.component.css'],
 })
 export class ProductCardComponent {
-  @Input() fullWidthMode = false;
+  @Input() fullWidthMode: boolean = false;
+  @Input() isMobile: boolean = false;
   @Output() addToCart = new EventEmitter();
 
-  product: Product | undefined = {
+  product: Product = {
     id: 1,
     title: 'sneakers',
     price: 150,

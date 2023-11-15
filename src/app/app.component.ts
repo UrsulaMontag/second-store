@@ -8,11 +8,11 @@ import { CartService } from './services/cart.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'second-store';
+  title = 'ReLove';
   cart: Cart = { items: [] };
 
   constructor(private cartService: CartService) {
-    this.cartService.cart.subscribe((_cart) => {
+    this.cartService.cart$.subscribe((_cart) => {
       this.cart = _cart;
     });
   }

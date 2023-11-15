@@ -7,12 +7,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class CartService {
-  cart = new BehaviorSubject<Cart>({ items: [] });
+  cart$ = new BehaviorSubject<Cart>({ items: [] });
 
   constructor(private _snackBar: MatSnackBar) {}
 
   addToCart(item: CartItem): void {
-    const items = [...this.cart.value.items];
+    const items = [...this.cart$.value.items];
     const itemsInCart = items.find((_item) => _item.id === item.id);
 
     if (itemsInCart) {
@@ -21,11 +21,11 @@ export class CartService {
       items.push(item);
     }
 
-    this.cart.next({ items });
+    this.cart$.next({ items });
     this._snackBar.open('1 Artikel wurde in den Warenkorb gelegt.', 'Ok', {
       duration: 3000,
     });
-    console.log(this.cart.value);
+    console.log(this.cart$.value);
   }
 
   getTotal(items: Array<CartItem>): number {
@@ -35,16 +35,16 @@ export class CartService {
   }
 
   clearCart(): void {
-    this.cart.next({ items: [] });
+    this.cart$.next({ items: [] });
     this._snackBar.open('Warenkorb wurde geleert', 'Ok', { duration: 3000 });
   }
 
   removeFromCart(item: CartItem, update: boolean = true): Array<CartItem> {
-    const filteredItems: CartItem[] = this.cart.value.items.filter(
+    const filteredItems: CartItem[] = this.cart$.value.items.filter(
       (_item) => _item.id !== item.id,
     );
     if (update) {
-      this.cart.next({ items: filteredItems });
+      this.cart$.next({ items: filteredItems });
       this._snackBar.open(
         'Der Artikel wurde aus dem Warenkorb entfernt.',
         'Ok',
@@ -60,7 +60,7 @@ export class CartService {
   removeQuantity(item: CartItem): void {
     let itemForRemoval: CartItem | undefined;
 
-    let filteredItems: CartItem[] = this.cart.value.items.map((_item) => {
+    let filteredItems: CartItem[] = this.cart$.value.items.map((_item) => {
       if (_item.id === item.id) {
         _item.quantity--;
 
@@ -75,7 +75,7 @@ export class CartService {
       filteredItems = this.removeFromCart(itemForRemoval, false);
     }
 
-    this.cart.next({ items: filteredItems });
+    this.cart$.next({ items: filteredItems });
     this._snackBar.open('Ein Artikel wurde aus dem Warenkorb entfernt.', 'Ok', {
       duration: 3000,
     });
