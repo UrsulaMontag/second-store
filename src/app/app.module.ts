@@ -18,11 +18,24 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { StoreHeaderComponent } from './core/components/store-header/store-header.component';
 import { HomeComponent } from './pages/home/home.component';
+import { FiltersComponent } from './core/components/filters/filters.component';
+import { ProductCardComponent } from './pages/home/components/product-card/product-card.component';
+import { CartComponent } from './pages/cart/cart.component';
 import { ProductsHeaderComponent } from './pages/home/components/products-header/products-header.component';
-import { FiltersComponent } from './pages/home/components/filters/filters.component';
+
+import { CartService } from './services/cart.service';
+import { ViewService } from './services/view.service';
 
 @NgModule({
-  declarations: [AppComponent, StoreHeaderComponent, HomeComponent, ProductsHeaderComponent, FiltersComponent],
+  declarations: [
+    AppComponent,
+    StoreHeaderComponent,
+    HomeComponent,
+    ProductsHeaderComponent,
+    FiltersComponent,
+    ProductCardComponent,
+    CartComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,7 +53,7 @@ import { FiltersComponent } from './pages/home/components/filters/filters.compon
     MatSnackBarModule,
     MatMenuModule,
   ],
-  providers: [],
+  providers: [CartService, ViewService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
