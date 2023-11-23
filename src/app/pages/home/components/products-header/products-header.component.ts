@@ -7,15 +7,16 @@ import { ViewService } from 'src/app/services/view.service';
   styleUrls: ['./products-header.component.css'],
 })
 export class ProductsHeaderComponent implements OnInit {
-  @Output() columnsCountChange = new EventEmitter<number>();
-  @Output() itemsShowCountChange = new EventEmitter<number>();
-  @Output() sortChange = new EventEmitter<string>();
-  public sort: string = 'desc';
-  public itemsShowCount: number = 12;
-  public isMobile: boolean = false;
+  @Output() private columnsCountChange = new EventEmitter<number>();
+  @Output() private itemsShowCountChange = new EventEmitter<number>();
+  @Output() private sortChange = new EventEmitter<string>();
+  public sort = 'desc';
+  public itemsShowCount = 12;
+  public isMobile = false;
 
-  constructor(private viewService: ViewService) {}
-  ngOnInit(): void {
+  private constructor(private viewService: ViewService) {}
+
+  public ngOnInit(): void {
     this.viewService.isMobile$().subscribe((_result) => {
       this.isMobile = _result;
     });

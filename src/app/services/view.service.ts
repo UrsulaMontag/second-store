@@ -9,7 +9,7 @@ export class ViewService {
   public sideNavVisibility$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-  constructor(private breakpontObserver: BreakpointObserver) {}
+  private constructor(private breakpontObserver: BreakpointObserver) {}
 
   public isMobile$(): Observable<boolean> {
     return this.breakpontObserver

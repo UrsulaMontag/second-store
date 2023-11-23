@@ -8,9 +8,8 @@ describe('StoreHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StoreHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [StoreHeaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StoreHeaderComponent);
     component = fixture.componentInstance;

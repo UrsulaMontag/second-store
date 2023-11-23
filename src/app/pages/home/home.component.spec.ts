@@ -10,10 +10,9 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+      declarations: [HomeComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -39,7 +38,14 @@ describe('HomeComponent', () => {
 
   it('should handle addToCart event', () => {
     // Arrange
-    const product: Product = { id: 1, title: 'Test Product', price: 100, image: 'test.jpg', category: 'Test Category', description: 'Test Description' };
+    const product: Product = {
+      id: 1,
+      title: 'Test Product',
+      price: 100,
+      image: 'test.jpg',
+      category: 'Test Category',
+      description: 'Test Description',
+    };
 
     // Act
     component.onAddToCart(product);

@@ -7,12 +7,12 @@ import { Product } from 'src/app/models/product.model';
   styleUrls: ['./product-card.component.css'],
 })
 export class ProductCardComponent {
-  @Input() fullWidthMode: boolean = false;
-  @Input() isMobile: boolean = false;
-  @Input() product: Product | undefined;
-  @Output() addToCart: EventEmitter<Product> = new EventEmitter();
+  @Input() public fullWidthMode = false;
+  @Input() public isMobile = false;
+  @Input() private product: Product | undefined;
+  @Output() private addToCart: EventEmitter<Product> = new EventEmitter();
 
-  onAddToCart(): void {
+  public onAddToCart(): void {
     this.addToCart.emit(this.product);
   }
 }
