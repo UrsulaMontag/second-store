@@ -14,13 +14,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./filters.component.css'],
 })
 export class FiltersComponent implements OnInit, OnDestroy {
-  @Output() showCategory = new EventEmitter<string>();
-  categorySubscription: Subscription | undefined;
+  @Output() private showCategory = new EventEmitter<string>();
+  private categorySubscription: Subscription | undefined;
   public categories: string[] | undefined;
 
-  constructor(private storeService: StoreService) {}
+  public constructor(private storeService: StoreService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.categorySubscription = this.storeService
       .getAllCategories()
       .subscribe((_categories) => {
@@ -28,14 +28,14 @@ export class FiltersComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     //Avoid memory leaks by unsubscribing from the observable
     if (this.categorySubscription) {
       this.categorySubscription.unsubscribe();
     }
   }
 
-  onShowCategory(category: string): void {
+  public onShowCategory(category: string): void {
     this.showCategory.emit(category);
   }
 }

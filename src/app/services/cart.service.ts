@@ -7,11 +7,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class CartService {
-  cart$ = new BehaviorSubject<Cart>({ items: [] });
+  private cart$ = new BehaviorSubject<Cart>({ items: [] });
 
-  constructor(private _snackBar: MatSnackBar) {}
+  private constructor(private _snackBar: MatSnackBar) {}
 
-  addToCart(item: CartItem): void {
+  public addToCart(item: CartItem): void {
     const items = [...this.cart$.value.items];
     const itemsInCart = items.find((_item) => _item.id === item.id);
 
@@ -28,36 +28,18 @@ export class CartService {
     console.log(this.cart$.value);
   }
 
-  getTotal(items: Array<CartItem>): number {
+  public getTotal(items: Array<CartItem>): number {
     return items
       .map((item) => item.price * item.quantity)
       .reduce((prev, current) => prev + current, 0);
   }
 
-  clearCart(): void {
+  public clearCart(): void {
     this.cart$.next({ items: [] });
     this._snackBar.open('Warenkorb wurde geleert', 'Ok', { duration: 3000 });
   }
 
-  removeFromCart(item: CartItem, update: boolean = true): Array<CartItem> {
-    const filteredItems: CartItem[] = this.cart$.value.items.filter(
-      (_item) => _item.id !== item.id,
-    );
-    if (update) {
-      this.cart$.next({ items: filteredItems });
-      this._snackBar.open(
-        'Der Artikel wurde aus dem Warenkorb entfernt.',
-        'Ok',
-        {
-          duration: 3000,
-        },
-      );
-    }
-
-    return filteredItems;
-  }
-
-  removeQuantity(item: CartItem): void {
+  public removeQuantity(item: CartItem): void {
     let itemForRemoval: CartItem | undefined;
 
     let filteredItems: CartItem[] = this.cart$.value.items.map((_item) => {
@@ -79,5 +61,23 @@ export class CartService {
     this._snackBar.open('Ein Artikel wurde aus dem Warenkorb entfernt.', 'Ok', {
       duration: 3000,
     });
+  }
+
+  private removeFromCart(item: CartItem, update = true): Array<CartItem> {
+    const filteredItems: CartItem[] = this.cart$.value.items.filter(
+      (_item) => _item.id !== item.id,
+    );
+    if (update) {
+      this.cart$.next({ items: filteredItems });
+      this._snackBar.open(
+        'Der Artikel wurde aus dem Warenkorb entfernt.',
+        'Ok',
+        {
+          duration: 3000,
+        },
+      );
+    }
+
+    return filteredItems;
   }
 }

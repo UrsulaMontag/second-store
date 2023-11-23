@@ -17,18 +17,18 @@ const ROWS_HEIGHT: { [id: number]: number } = {
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  cols: number = 3;
-  rowHeight: number = 335;
-  category: string | undefined;
-  isMobile: boolean = true;
-  onFilterOpen: boolean = false;
+  private cols = 3;
+  private category: string | undefined;
+  private isMobile = true;
+  public onFilterOpen = false;
+  public rowHeight = 335;
 
-  products: Array<Product> | undefined;
-  sort = 'desc';
-  count = '12';
-  productsSubscription: Subscription | undefined;
+  public products: Array<Product> | undefined;
+  private sort = 'desc';
+  private count = '12';
+  private productsSubscription: Subscription | undefined;
 
-  constructor(
+  private constructor(
     private cartService: CartService,
     private viewService: ViewService,
     private storeService: StoreService,
@@ -38,19 +38,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.onIsMobile();
     this.getProuducts();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     //Avoid memory leaks by unsubscribing from the observable
     if (this.productsSubscription) {
       this.productsSubscription.unsubscribe();
     }
   }
 
-  getProuducts(): void {
+  private getProuducts(): void {
     this.productsSubscription = this.storeService
       .getAllProducts(this.count, this.sort, this.category)
       .subscribe((_products) => {
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  onAddToCart(product: Product): void {
+  public onAddToCart(product: Product): void {
     this.cartService.addToCart({
       product: product.image,
       name: product.title,
@@ -68,25 +68,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  toggleSideNavVisibility(): void {
+  public toggleSideNavVisibility(): void {
     this.viewService.toggleSideNavVisibility();
   }
 
-  onColumnsUpdated(colsNum: number): void {
-    this.cols = colsNum;
-    this.rowHeight = ROWS_HEIGHT[this.cols];
-  }
-  onShowCategory(newCategory: string): void {
+  public onShowCategory(newCategory: string): void {
     this.category = newCategory;
     this.getProuducts();
   }
 
-  onItemsCountUpdated(showCount: number): void {
+  public onItemsCountUpdated(showCount: number): void {
     this.count = showCount.toString();
     this.getProuducts();
   }
 
-  onSortChange(sortValue: string): void {
+  public onSortChange(sortValue: string): void {
     this.sort = sortValue;
     this.getProuducts();
   }
@@ -101,5 +97,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else {
       this.onColumnsUpdated(3);
     }
+  }
+
+  private onColumnsUpdated(colsNum: number): void {
+    this.cols = colsNum;
+    this.rowHeight = ROWS_HEIGHT[this.cols];
   }
 }

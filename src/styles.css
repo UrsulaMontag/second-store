@@ -11,6 +11,6 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-*{  border: solid .2px red
+* {
+  border: solid 0.2px red;
 }
-

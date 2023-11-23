@@ -9,5 +9,5 @@
   "useTabs": false,
   "printWidth": 100,
   "bracketSpacing": true,
-  "bracketSameLine": true
+  "bracketSameLine": false
 }

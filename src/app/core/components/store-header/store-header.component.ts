@@ -10,15 +10,15 @@ import { ViewService } from 'src/app/services/view.service';
 })
 export class StoreHeaderComponent implements OnInit {
   private _cart: Cart = { items: [] };
-  itemsQuantity = 0;
-  isMobile: boolean = false;
-  sideNavVisibility: boolean = false;
+  public itemsQuantity = 0;
+  public isMobile = false;
+  public sideNavVisibility = false;
 
   @Input()
-  get cart(): Cart {
+  public get cart(): Cart {
     return this._cart;
   }
-  set cart(cart: Cart) {
+  public set cart(cart: Cart) {
     this._cart = cart;
 
     this.itemsQuantity = cart.items
@@ -26,7 +26,7 @@ export class StoreHeaderComponent implements OnInit {
       .reduce((prev, current) => prev + current, 0);
   }
 
-  constructor(
+  private constructor(
     private cartService: CartService,
     private viewService: ViewService,
   ) {
@@ -36,21 +36,21 @@ export class StoreHeaderComponent implements OnInit {
       .subscribe((isMobile: boolean): boolean => (this.isMobile = isMobile));
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.viewService.sideNavVisibility$.subscribe(
       (visibility: boolean): boolean => (this.sideNavVisibility = visibility),
     );
   }
 
-  toggleSideNavVisibility(): void {
+  public toggleSideNavVisibility(): void {
     this.viewService.toggleSideNavVisibility();
   }
 
-  getTotal(items: Array<CartItem>): number {
+  public getTotal(items: Array<CartItem>): number {
     return this.cartService.getTotal(items);
   }
 
-  onClearCart(): void {
+  public onClearCart(): void {
     this.cartService.clearCart();
   }
 }
