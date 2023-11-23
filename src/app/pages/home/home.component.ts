@@ -1,6 +1,8 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
+import { StoreService } from 'src/app/services/store.service';
 import { ViewService } from 'src/app/services/view.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = {
@@ -14,16 +16,22 @@ const ROWS_HEIGHT: { [id: number]: number } = {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   cols: number = 3;
   rowHeight: number = 335;
   category: string | undefined;
   isMobile: boolean = true;
   onFilterOpen: boolean = false;
 
+  products: Array<Product> | undefined;
+  sort = 'desc';
+  count = '12';
+  productsSubscription: Subscription | undefined;
+
   constructor(
     private cartService: CartService,
     private viewService: ViewService,
+    private storeService: StoreService,
   ) {
     this.viewService.isMobile$().subscribe((result) => {
       this.isMobile = result;
@@ -32,15 +40,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.onIsMobile();
+    this.getProuducts();
   }
 
-  onColumnsUpdated(colsNum: number): void {
-    this.cols = colsNum;
-    this.rowHeight = ROWS_HEIGHT[this.cols];
+  ngOnDestroy(): void {
+    //Avoid memory leaks by unsubscribing from the observable
+    if (this.productsSubscription) {
+      this.productsSubscription.unsubscribe();
+    }
   }
-  onShowCategory(newCategory: string): void {
-    this.category = newCategory;
+
+  getProuducts(): void {
+    this.productsSubscription = this.storeService
+      .getAllProducts(this.count, this.sort, this.category)
+      .subscribe((_products) => {
+        this.products = _products;
+      });
   }
+
   onAddToCart(product: Product): void {
     this.cartService.addToCart({
       product: product.image,
@@ -53,6 +70,25 @@ export class HomeComponent implements OnInit {
 
   toggleSideNavVisibility(): void {
     this.viewService.toggleSideNavVisibility();
+  }
+
+  onColumnsUpdated(colsNum: number): void {
+    this.cols = colsNum;
+    this.rowHeight = ROWS_HEIGHT[this.cols];
+  }
+  onShowCategory(newCategory: string): void {
+    this.category = newCategory;
+    this.getProuducts();
+  }
+
+  onItemsCountUpdated(showCount: number): void {
+    this.count = showCount.toString();
+    this.getProuducts();
+  }
+
+  onSortChange(sortValue: string): void {
+    this.sort = sortValue;
+    this.getProuducts();
   }
 
   private onIsMobile(): void {

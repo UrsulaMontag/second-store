@@ -4,28 +4,45 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
+    "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": false,
+    "noImplicitReturns": false,
+    "strictNullChecks": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "resolveJsonModule": true,
     "target": "ES2022",
     "module": "ES2022",
-    "useDefineForClassFields": true,
-    "lib": ["ES2022", "dom"]
+    "lib": ["ES2022", "DOM"],
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@modules/*": ["src/app/modules/*"],
+      "@assets/*": ["src/assets/*"],
+      "@services/*": ["src/app/services/*"],
+      "@pages/*": ["src/app/pages/*"]
+    },
+    "plugins": [
+      { "name": "typscript-tslint-plugin", "configFile": "./tslint.json" }
+    ],
+    "useDefineForClassFields": false
   },
+
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "exclude": ["node_modules", "src/test.ts", "**/*.spec.ts"]
 }

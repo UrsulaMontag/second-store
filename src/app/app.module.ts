@@ -25,6 +25,8 @@ import { ProductsHeaderComponent } from './pages/home/components/products-header
 
 import { CartService } from './services/cart.service';
 import { ViewService } from './services/view.service';
+import { StoreService } from './services/store.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -52,8 +54,9 @@ import { ViewService } from './services/view.service';
     MatBadgeModule,
     MatSnackBarModule,
     MatMenuModule,
+    HttpClientModule,
   ],
-  providers: [CartService, ViewService],
+  providers: [CartService, ViewService, StoreService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
