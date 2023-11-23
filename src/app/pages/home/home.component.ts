@@ -52,19 +52,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getProuducts(): void {
     this.productsSubscription = this.storeService
-      .getAllProducts(this.count, this.sort)
+      .getAllProducts(this.count, this.sort, this.category)
       .subscribe((_products) => {
         this.products = _products;
       });
   }
 
-  onColumnsUpdated(colsNum: number): void {
-    this.cols = colsNum;
-    this.rowHeight = ROWS_HEIGHT[this.cols];
-  }
-  onShowCategory(newCategory: string): void {
-    this.category = newCategory;
-  }
   onAddToCart(product: Product): void {
     this.cartService.addToCart({
       product: product.image,
@@ -77,6 +70,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   toggleSideNavVisibility(): void {
     this.viewService.toggleSideNavVisibility();
+  }
+
+  onColumnsUpdated(colsNum: number): void {
+    this.cols = colsNum;
+    this.rowHeight = ROWS_HEIGHT[this.cols];
+  }
+  onShowCategory(newCategory: string): void {
+    this.category = newCategory;
+    this.getProuducts();
+  }
+
+  onItemsCountUpdated(showCount: number): void {
+    this.count = showCount.toString();
+    this.getProuducts();
+  }
+
+  onSortChange(sortValue: string): void {
+    this.sort = sortValue;
+    this.getProuducts();
   }
 
   private onIsMobile(): void {

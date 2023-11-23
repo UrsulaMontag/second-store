@@ -7,16 +7,13 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": false,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": false,
     "strictNullChecks": true,
     "sourceMap": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
@@ -25,8 +22,22 @@
     "resolveJsonModule": true,
     "target": "ES2022",
     "module": "ES2022",
-    "useDefineForClassFields": false,
+    "lib": ["ES2022", "DOM"],
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@modules/*": ["src/app/modules/*"],
+      "@assets/*": ["src/assets/*"],
+      "@services/*": ["src/app/services/*"],
+      "@pages/*": ["src/app/pages/*"]
+    },
+    "plugins": [
+      { "name": "typscript-tslint-plugin", "configFile": "./tslint.json" }
+    ],
+    "useDefineForClassFields": false
   },
+
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
