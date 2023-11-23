@@ -8,7 +8,7 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  private cart: Cart = {
+  public cart: Cart = {
     items: [
       {
         product: 'https://via.placeholder.com/150',
@@ -37,7 +37,7 @@ export class CartComponent implements OnInit {
     'action',
   ];
 
-  private constructor(private cartService: CartService) {}
+  public constructor(private cartService: CartService) {}
 
   public ngOnInit(): void {
     this.cartService.cart$.subscribe((_cart) => {

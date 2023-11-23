@@ -14,7 +14,7 @@ export class ProductsHeaderComponent implements OnInit {
   public itemsShowCount = 12;
   public isMobile = false;
 
-  private constructor(private viewService: ViewService) {}
+  public constructor(private viewService: ViewService) {}
 
   public ngOnInit(): void {
     this.viewService.isMobile$().subscribe((_result) => {

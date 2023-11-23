@@ -17,18 +17,18 @@ const ROWS_HEIGHT: { [id: number]: number } = {
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private cols = 3;
-  private category: string | undefined;
-  private isMobile = true;
+  public cols = 3;
+  public isMobile = true;
   public onFilterOpen = false;
   public rowHeight = 335;
-
   public products: Array<Product> | undefined;
+
+  private category: string | undefined;
   private sort = 'desc';
   private count = '12';
   private productsSubscription: Subscription | undefined;
 
-  private constructor(
+  public constructor(
     private cartService: CartService,
     private viewService: ViewService,
     private storeService: StoreService,
@@ -48,14 +48,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.productsSubscription) {
       this.productsSubscription.unsubscribe();
     }
-  }
-
-  private getProuducts(): void {
-    this.productsSubscription = this.storeService
-      .getAllProducts(this.count, this.sort, this.category)
-      .subscribe((_products) => {
-        this.products = _products;
-      });
   }
 
   public onAddToCart(product: Product): void {
@@ -87,6 +79,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getProuducts();
   }
 
+  public onColumnsUpdated(colsNum: number): void {
+    this.cols = colsNum;
+    this.rowHeight = ROWS_HEIGHT[this.cols];
+  }
+
   private onIsMobile(): void {
     if (this.isMobile) {
       this.onColumnsUpdated(2);
@@ -99,8 +96,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onColumnsUpdated(colsNum: number): void {
-    this.cols = colsNum;
-    this.rowHeight = ROWS_HEIGHT[this.cols];
+  private getProuducts(): void {
+    this.productsSubscription = this.storeService
+      .getAllProducts(this.count, this.sort, this.category)
+      .subscribe((_products) => {
+        this.products = _products;
+      });
   }
 }

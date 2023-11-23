@@ -9,7 +9,7 @@ import { Product } from 'src/app/models/product.model';
 export class ProductCardComponent {
   @Input() public fullWidthMode = false;
   @Input() public isMobile = false;
-  @Input() private product: Product | undefined;
+  @Input() public product: Product | undefined;
   @Output() private addToCart: EventEmitter<Product> = new EventEmitter();
 
   public onAddToCart(): void {

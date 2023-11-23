@@ -26,7 +26,7 @@ export class StoreHeaderComponent implements OnInit {
       .reduce((prev, current) => prev + current, 0);
   }
 
-  private constructor(
+  public constructor(
     private cartService: CartService,
     private viewService: ViewService,
   ) {
