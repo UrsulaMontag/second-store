@@ -1,6 +1,8 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
+import { StoreService } from 'src/app/services/store.service';
 import { ViewService } from 'src/app/services/view.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = {
@@ -14,16 +16,22 @@ const ROWS_HEIGHT: { [id: number]: number } = {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   cols: number = 3;
   rowHeight: number = 335;
   category: string | undefined;
   isMobile: boolean = true;
   onFilterOpen: boolean = false;
 
+  products: Array<Product> | undefined;
+  sort = 'desc';
+  count = '12';
+  productsSubscription: Subscription | undefined;
+
   constructor(
     private cartService: CartService,
     private viewService: ViewService,
+    private storeService: StoreService,
   ) {
     this.viewService.isMobile$().subscribe((result) => {
       this.isMobile = result;
@@ -32,6 +40,22 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.onIsMobile();
+    this.getProuducts();
+  }
+
+  ngOnDestroy(): void {
+    //Avoid memory leaks by unsubscribing from the observable
+    if (this.productsSubscription) {
+      this.productsSubscription.unsubscribe();
+    }
+  }
+
+  getProuducts(): void {
+    this.productsSubscription = this.storeService
+      .getAllProducts(this.count, this.sort)
+      .subscribe((_products) => {
+        this.products = _products;
+      });
   }
 
   onColumnsUpdated(colsNum: number): void {

@@ -9,16 +9,8 @@ import { Product } from 'src/app/models/product.model';
 export class ProductCardComponent {
   @Input() fullWidthMode: boolean = false;
   @Input() isMobile: boolean = false;
-  @Output() addToCart = new EventEmitter();
-
-  product: Product = {
-    id: 1,
-    title: 'sneakers',
-    price: 150,
-    category: 'shoes',
-    description: 'Description',
-    image: 'https://via.placeholder.com/150',
-  };
+  @Input() product: Product | undefined;
+  @Output() addToCart: EventEmitter<Product> = new EventEmitter();
 
   onAddToCart(): void {
     this.addToCart.emit(this.product);
