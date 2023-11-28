@@ -27,6 +27,8 @@ import { CartService } from './services/cart.service';
 import { ViewService } from './services/view.service';
 import { StoreService } from './services/store.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxStripeModule } from 'ngx-stripe';
+import { environment } from 'src/environments/environment.development';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSnackBarModule,
     MatMenuModule,
     HttpClientModule,
+    NgxStripeModule.forRoot(environment.stripe.publicKey),
   ],
   providers: [CartService, ViewService, StoreService],
   bootstrap: [AppComponent],
