@@ -1,6 +1,12 @@
 # SecondStore
+**IN DEVELOPMENT**
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.2 (updated to version 16.2.12).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.2.
+## About
+This project serves as a platform for me to dive further into the world of Angular.   
+ Initially, I developed a small e-commerce shop with the help of [**Slobodan Gajic's** online tutorial](https://www.freecodecamp.org/news/build-a-webshop-with-angular-node-js-typescript-stripe/) on creating a web shop with Angular, Node.js, TypeScript, Tailwind and Stripe. The tutorial helped me to create the structure and content of the shop.   
+  It is important to me that the shop is fully responsive on all devices and has an intuitive and accessible interface.   
+Subsequently, I would like to improve the handling of the data state with NGRX and store the user interaction in a local store.
 
 ## Development server
 
