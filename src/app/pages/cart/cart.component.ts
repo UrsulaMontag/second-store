@@ -76,7 +76,8 @@ export class CartComponent implements OnInit {
       .post('http://localhost:4242/checkout', {
         items: this.cart.items,
       })
-      .subscribe(async (res: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .subscribe( async ( res: any ) => {
         const stripe = await loadStripe('process.env.STRIPE_TEST_API_KEY');
         stripe?.redirectToCheckout({ sessionId: res.id });
       });

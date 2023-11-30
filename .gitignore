@@ -46,3 +46,11 @@ Thumbs.db
 
 #Testresults Frontend
 /TestResult
+
+/server/node_modules
+/server/dist
+/server/.env
+/server/.env.local
+/server/package-lock.json
+.vscode/settings.json
+
