@@ -9,7 +9,27 @@ app.use( express.static( "public" ) );
 app.use( bodyParser.urlencoded( { extended: false } ) );
 app.use( cors( { origin: true, credentials: true } ) );
 
-const stripe =require("stripe")
+const stripe = require( "stripe" )( "sk_test_51OFwcvKlrjsqeXTeimTQENmzKmQbPhT5SpZHQOsHuJKcqoQeFLn1zCTsiIzSoD4DLTjLzcJ47AIe2MYXsf8mHILi002hpSs7kz" );
+
+app.post( "/checkout", async ( req, res, next ) => {
+  try {
+    const session = await stripe.checkout.sessions.create( {
+      line_items: req.body.items.map( ( item ) => ( {
+        currency: "euro",
+        product_data: {
+          name: item.name,
+          images: [item.product]
+        },
+        unit_amount: item.price *100
+      } ) ),
+      mode: "payment",
+      success_url: "http://localhost:4242/success.html",
+      cancel_url: "http://localhost:4242/cancel.html",
+    } )
+  }catch ( error ) {
+  next(error)
+  }
+})
 
 // Allow any method from any host and log requests
 app.use((req: { method: string; ip: any; url: any; }, res: { header: ( arg0: string, arg1: string ) => void; sendStatus: ( arg0: number ) => void; }, next: () => void) => {
@@ -35,7 +55,7 @@ app.get('/', (req: any, res: { send: ( arg0: { hello: string; } ) => void; }) =>
   res.send({ hello: 'world' });
 } );
 
-// start our server on port 4201
-app.listen(4201, '127.0.0.1', function () {
+// start our server on port 4242
+app.listen(4242, function () {
   console.log('Server now listening on 4201');
 });
